@@ -29,7 +29,7 @@ class Torneio: #classe determina por default uma configuração de torneio usand
     sexoEscolhido=random.choice(list(sexoTorneiosTodos.keys()))            #Masculino ou Feminino
     pesoEscolhido=random.choice(list(pesoTorneiosTodos.keys()))            #Leve, Médio, Pesado ou Super pesado 
     categoriaEscolhido=random.choice(list(categoriaTorneiosTodos.keys()))  #Junior, Sub-21 ou Senior
-    tipoEscolhido=random.randint(list(tipoTorneiosTodos.keys()))           #Todos contra todos ou Mata-mata 
+    tipoEscolhido=random.choice(list(tipoTorneiosTodos.keys()))           #Todos contra todos ou Mata-mata 
     def __init__(self,sexoEscolhido,pesoEscolhido,categoriaEscolhido,tipoEscolhido): #configuração manual
         self.sexoEscolhido=sexoEscolhido   
         self.pesoEscolhido=pesoEscolhido           
@@ -71,6 +71,7 @@ def criarTorneio(): #função retorna atributos da class Torneio pelo método __
         else:
             print("\Tipo inválido para o torneio!\n")
     return sexoDeterminado, pesoDeterminado, categoriaDeterminado, tipoDeterminado
+torneioEscolhido=Torneio
 
 class Lutador(object): #class lutador para gerar e inscrever lutadores, apenas usa o método  __init__()
     def __init__(self,nome,sobrenome, sexo,peso,categoria,idade,faixa,altura,número,treino,sorte): 
@@ -157,7 +158,7 @@ def gerarLutador(sexoEscolhido,pesoEscolhido,categoriaEscolhido): #determina os 
     else:
         nomeSorteado=random.choice(nomeFemeninoTodos)
     sobrenomeSorteado=random.choice(sobrenomeTodos)
-    pesoSorteado=random.randint(pesoTorneiosTodos[pesoEscolhido])
+    pesoSorteado=random.randint(list(pesoTorneiosTodos[pesoEscolhido])) #tem um bug aqui, nao tive tempo para resolver
     categoriaSorteado=categoriaEscolhido
     idadeSorteado=random.randint(categoriaIdadeTorneios[categoriaEscolhido])
     faixaSorteado=random.choice(categoriaFaixaTorneios[categoriaEscolhido])
@@ -181,11 +182,11 @@ def torneioT():
     vitórias=[]
 
 #dispocições iniciais do programa
-torneioE=Torneio
 lutadores=[]
 vitórias=[0,0,0,0,0,0,0,0]
 for i in range(8):
-    lutadores.append(Lutador(i))
+    lutador=Lutador(i,gerarLutador(random.choice(list(sexoTorneiosTodos.keys())),random.choice(list(pesoTorneiosTodos.keys())),random.choice(list(categoriaTorneiosTodos.keys()))))
+    lutadores=lutadores.append(lutador)
 loc="0"
 #menu interno
 def menuInterno():
@@ -196,7 +197,7 @@ def menuInterno():
         if loc=="1":
         #inscrever lutador
             lutadores=lutadores.remove(0)
-            lutadores=lutadores.append(Lutador(inscreverLutador())
+            lutadores=lutadores.append(Lutador(inscreverLutador()))
         elif loc=="2":
         #ver lutadores
             for n in range(8):
